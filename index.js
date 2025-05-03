@@ -1,25 +1,24 @@
-const express = require('express')
+const express = require('express');
 const connectToMongo = require('./db');
-const app = express()
-var cors = require('cors');
+const cors = require('cors');
 
-const port = 5000
+const app = express();
+const port = 5000;
+
+// Connect to MongoDB
 connectToMongo();
 
- 
+// Middlewares
 app.use(cors());
 app.use(express.json());
-
 app.use('/images', express.static('./images'));
-app.use('/api/auth',require('./routes/auth'))
-app.use('/api/products',require('./routes/Products'))
+
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/products', require('./routes/Products'));
 app.use('/api/messages', require('./routes/message'));
 
-
-app.use(cors({
-  origin: '*',
-}));
-
+// Start server
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Server listening on port ${port}`);
+});
